@@ -34,6 +34,9 @@
 
   ;; I want C-w o to close other windows
   (define-key evil-window-map "o" 'delete-other-windows)
+
+  ;; I want C-w F to open a new frame
+  (define-key evil-window-map "F" 'make-frame)
   )
 
 
@@ -51,8 +54,6 @@
   )
 
 (display-time-mode 1)
-;; Enable golden-ratio mode(resize focused pane)
-;; (golden-ratio-mode 1)
 
 ;; Tweak company-mode display options
 (after! company
@@ -84,7 +85,6 @@
  :prefix "b"
  :desc "Filter project buffers"           "B" #'persp-switch-to-buffer)
 
-
 ;; END Spacemacs muscle memory
 ;; END Custom keybinds
 
@@ -106,6 +106,9 @@
   ;; (add-to-list 'org-src-lang-modes (cons "JSON" 'json))
   ;; (add-to-list 'org-src-lang-modes (cons "CS" 'csharp))
   ;; (add-to-list 'org-src-lang-modes (cons "JS" 'js2))
+
+  ;; Whenever I invoke org-agenda, it should open in another frame
+  (setq org-agenda-window-setup 'other-frame)
 
   ;;Org-babel graphing stuff
   (setq org-ditaa-jar-path "~/Dropbox/org/ditaa.jar")
