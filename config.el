@@ -86,6 +86,29 @@
  :desc "Filter project buffers"           "B" #'persp-switch-to-buffer)
 
 ;; END Spacemacs muscle memory
+
+;; SPC / r - resume last search
+(map!
+ :leader
+ :prefix "/"
+ :desc "Resume last search"           "r" #'ivy-resume)
+
+;; Org binds are goofy, fix
+(map!
+ :leader
+ :prefix "n"
+ :desc "Find file in notes"           "f" #'+default/find-in-notes)
+
+;; Put org subtree narrow on a more mnemonic keybind
+(map!
+ :leader
+ :prefix "n"
+ :desc "Narrow buffer to subtree"           "n" #'org-narrow-to-subtree)
+
+(map!
+ :leader
+ :prefix "n"
+ :desc "Widen buffer"           "N" #'widen)
 ;; END Custom keybinds
 
 ;;BEGIN ORGMODE CONFIG
