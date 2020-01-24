@@ -278,4 +278,7 @@
 
   (add-to-list 'flycheck-checkers 'cfn-lint)
   (add-hook! 'cfn-yaml-mode-hook 'flycheck-mode)
+
+
+  (setq-default flycheck-markdown-markdownlint-cli-config ".markdownlint.json")
   )
