@@ -66,6 +66,14 @@
 ;;When I quit, don't ask me if I want to kill processes
 (setq confirm-kill-processes nil)
 
+;; Configure grip markdown previewer to pull Github API token from ~/.authinfo.gpg
+(use-package! grip-mode
+  :hook (prog-mode . grip-mode-hook)
+  :config
+    (let ((credential (auth-source-user-and-password "api.github.com")))
+    (setq grip-github-user (car credential)
+      grip-github-password (cadr credential)))
+)
 ;; Delete to (freedesktop.org) trash
 (setq delete-by-moving-to-trash t)
 
