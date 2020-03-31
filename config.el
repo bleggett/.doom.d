@@ -98,7 +98,7 @@
 ;; SPC / r - resume last search
 (map!
  :leader
- :prefix "/"
+ :prefix "s"
  :desc "Resume last search"           "r" #'ivy-resume)
 
 ;; Org binds are goofy, fix
