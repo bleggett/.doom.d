@@ -290,3 +290,5 @@
 
   (setq-default flycheck-markdown-markdownlint-cli-config ".markdownlint.json")
   )
+
+;; When I switch Counsel/Projectile projects, open Magit buffer by default
