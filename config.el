@@ -70,10 +70,10 @@
 (use-package! grip-mode
   :hook (prog-mode . grip-mode-hook)
   :config
-    (let ((credential (auth-source-user-and-password "api.github.com")))
+  (let ((credential (auth-source-user-and-password "api.github.com")))
     (setq grip-github-user (car credential)
-      grip-github-password (cadr credential)))
-)
+          grip-github-password (cadr credential)))
+  )
 ;; Delete to (freedesktop.org) trash
 (setq delete-by-moving-to-trash t)
 
@@ -292,3 +292,6 @@
   )
 
 ;; When I switch Counsel/Projectile projects, open Magit buffer by default
+(after! counsel-projectile
+  (counsel-projectile-modify-action 'counsel-projectile-switch-project-action '((default counsel-projectile-switch-project-action-vc)))
+  )
