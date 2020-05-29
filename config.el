@@ -28,6 +28,9 @@
   (menu-bar-mode t)
   )
 
+;;Render images
+(setq auto-image-file-mode 1)
+
 (after! evil
   ;; Twiddle evil cursor visuals for insert state
   (setq evil-insert-state-cursor '(bar "orange"))
@@ -119,27 +122,78 @@
  :desc "Widen buffer"           "N" #'widen)
 ;; END Custom keybinds
 
+
+;;BEGIN ORG-ROAM CONFIG
+(require 'org-roam-protocol)
+
+(use-package org-journal
+  :bind
+  ("C-c n j" . org-journal-new-entry)
+  :custom
+  (org-journal-dir "~/Dropbox/org-roam/")
+  (org-journal-date-prefix "#+TITLE: ")
+  (org-journal-file-format "%Y-%m-%d.org")
+  (org-journal-date-format "%A, %d %B %Y")
+  )
+
+(setq org-journal-enable-agenda-integration t)
+
+(after! org-roam
+  (setq org-roam-graph-viewer "open")
+  (setq org-roam-directory "~/Dropbox/org-roam")
+  (map! :leader
+        :prefix "n"
+        :desc "org-roam" "l" #'org-roam
+        :desc "org-roam-insert" "i" #'org-roam-insert
+        :desc "org-roam-switch-to-buffer" "b" #'org-roam-switch-to-buffer
+        :desc "org-roam-find-file" "f" #'org-roam-find-file
+        :desc "org-roam-show-graph" "g" #'org-roam-show-graph
+        :desc "org-roam-insert" "i" #'org-roam-insert
+        :desc "org-roam-search" "s" #'deft
+        :desc "org-roam-yesterday" "y" #'org-roam-dailies-yesterday
+        :desc "org-roam-today" "t" #'org-roam-dailies-today
+        :desc "org-roam-capture" "c" #'org-roam-capture)
+
+  (setq org-roam-capture-ref-templates
+        '(("r" "ref" plain (function org-roam-capture--get-point)
+           "%x"
+           :file-name "websites/${slug}"
+           :head "#+TITLE: ${title}
+    #+ROAM_KEY: ${ref}
+    - source :: ${ref}"
+           :unnarrowed t
+           :immediate-finish t))
+        )
+  )
+
+(after! deft
+  (setq deft-directory "~/Dropbox/org-roam/")
+  (setq deft-recursive t)
+  (setq deft-use-filter-string-for-filename t)
+  (setq deft-default-extension "org")
+  )
+
 ;;BEGIN ORGMODE CONFIG
 ;; Put orgmode config here, spacemacs does not use the built-in org version
 (after! org
-  (setq org-directory "~/Dropbox/org")
+  (setq org-directory "~/Dropbox/org-roam")
 
-  (setq org-default-notes-file "~/Dropbox/org/refile.org")
-  (setq org-archive-location (concat "archive/archive-"
-                                     (format-time-string "%Y%m" (current-time))
-                                     ".org::"))
-  '(org-enforce-todo-dependencies t)
+  ;; ;; (setq org-default-notes-file "~/Dropbox/org/refile.org")
+  ;; (setq org-archive-location (concat "archive/archive-"
+  ;;                                    (format-time-string "%Y%m" (current-time))
+  ;;                                    ".org::"))
+  ;; '(org-enforce-todo-dependencies t)
 
-  ;; Tell org that we're using org-protocol
-  (add-to-list 'org-modules 'org-protocol)
+  ;; ;; Tell org that we're using org-protocol
+  ;; ;; (add-to-list 'org-modules 'org-protocol)
 
-  ;; ;;Syntax mode highight to ORG #+BEGIN_SRC code block mappings.
-  ;; (add-to-list 'org-src-lang-modes (cons "JSON" 'json))
-  ;; (add-to-list 'org-src-lang-modes (cons "CS" 'csharp))
-  ;; (add-to-list 'org-src-lang-modes (cons "JS" 'js2))
+  ;;Syntax mode highight to ORG #+BEGIN_SRC code block mappings.
+  (add-to-list 'org-src-lang-modes (cons "JSON" 'json))
+  (add-to-list 'org-src-lang-modes (cons "CS" 'csharp))
+  (add-to-list 'org-src-lang-modes (cons "JS" 'js2))
 
-  ;; Whenever I invoke org-agenda, it should open in another frame
-  (setq org-agenda-window-setup 'other-frame)
+  ;; ;; Whenever I invoke org-agenda, it should open in another frame
+  ;; (setq org-agenda-window-setup 'other-frame)
 
   ;;Org-babel graphing stuff
   (setq org-ditaa-jar-path "~/Dropbox/org/ditaa.jar")
@@ -165,72 +219,72 @@
   ;; Bullet list symbols
   (setq-default org-bullets-bullet-list '("•" "◊" "Δ" "†"))
 
-  ;; Capture templates for: TODO tasks, Notes, and org-protocol
-  (setq org-capture-templates
-        (quote (("t" "todo" entry (file org-default-notes-file)
-                 "* TODO %?\n%U\n%a\n")
-                ("n" "note" entry (file org-default-notes-file)
-                 "* %? :NOTE:\n%U\n%a\n")
-                ("p" "Protocol" entry (file org-default-notes-file)
-                 "* %^{Title}\nSource: %:link\nAt: %u\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
-                ("L" "Protocol Link" entry (file org-default-notes-file)
-                 "* [[%:link][%:description]] :NOTE:\nCaptured On: %U" :immediate-finish t))))
+  ;; ;; Capture templates for: TODO tasks, Notes, and org-protocol
+  ;; (setq org-capture-templates
+  ;;       (quote (("t" "todo" entry (file org-default-notes-file)
+  ;;                "* TODO %?\n%U\n%a\n")
+  ;;               ("n" "note" entry (file org-default-notes-file)
+  ;;                "* %? :NOTE:\n%U\n%a\n")
+  ;;               ("p" "Protocol" entry (file org-default-notes-file)
+  ;;                "* %^{Title}\nSource: %:link\nAt: %u\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+  ;;               ("L" "Protocol Link" entry (file org-default-notes-file)
+  ;;                "* [[%:link][%:description]] :NOTE:\nCaptured On: %U" :immediate-finish t))))
 
   (setq org-todo-keywords
         (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
                 (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
 
   ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
-  (setq org-refile-targets (quote ((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))))
+  ;; (setq org-refile-targets (quote ((nil :maxlevel . 9) (org-agenda-files :maxlevel . 9))))
 
   ;;Let me refile to top level headers
-  (setq org-refile-use-outline-path 'file)
-  (setq org-outline-path-complete-in-steps nil)
+  ;; (setq org-refile-use-outline-path 'file)
+  ;; (setq org-outline-path-complete-in-steps nil)
 
   ;; What files to include in the agenda
   ;; include subfolders, and archives for search purposes
-  (let ((default-directory org-directory))
-    (setq org-agenda-files (list org-directory (expand-file-name "conferences") (expand-file-name "archive"))))
+  ;; (let ((default-directory org-directory))
+  ;;   (setq org-agenda-files (list org-directory (expand-file-name "conferences") (expand-file-name "archive"))))
 
   ;; Enable org-super-agenda
-  (org-super-agenda-mode 1)
+  ;; (org-super-agenda-mode 1)
 
-  ;; Since we use multiple blocks to 'fake' a complete agenda, drop separator
-  (setq org-agenda-block-separator nil)
+  ;; ;; Since we use multiple blocks to 'fake' a complete agenda, drop separator
+  ;; (setq org-agenda-block-separator nil)
 
-  ;; Org super agenda headers have their own keymap - I want it to clone the `evil-org-agenda' map
-  (setq org-super-agenda-header-map nil)
+  ;; ;; Org super agenda headers have their own keymap - I want it to clone the `evil-org-agenda' map
+  ;; (setq org-super-agenda-header-map nil)
 
-  ;;Don't let children inherit tags
-  ;; (setq org-use-tag-inheritance nil)
+  ;; ;;Don't let children inherit tags
+  ;; ;; (setq org-use-tag-inheritance nil)
 
-  ;; I want refile.org's file-level :REFILE: to be inherited, but only by the top-level heading
-  (setq org-tags-match-list-sublevels nil)
+  ;; ;; I want refile.org's file-level :REFILE: to be inherited, but only by the top-level heading
+  ;; (setq org-tags-match-list-sublevels nil)
 
-  ;; Whenever I invoke org-agenda, it should open in another frame
-  ;; (setq org-agenda-window-setup 'other-frame)
+  ;; ;; Whenever I invoke org-agenda, it should open in another frame
+  ;; ;; (setq org-agenda-window-setup 'other-frame)
 
-  ;; Custom agenda command definitions
-  (setq org-agenda-custom-commands
-        '(("b" "Ben's TODO View"
-           ((tags "REFILE" ((org-agenda-overriding-header "Ben's Projects")
-                            (org-super-agenda-groups
-                             '((:name "Pending Refile"
-                                      :tag "REFILE")
-                               (:discard (:anything t))))))
-            (tags-todo "-REFILE/!"
-                       ((org-agenda-overriding-header "")
-                        (org-super-agenda-groups
-                         '((:name "Active Projects"
-                                  :and (:todo "TODO" :children todo))
-                           (:name "Active Tasks"
-                                  :and (:todo "TODO" :children nil))
-                           (:name "Stuck Projects"
-                                  :and (:todo ("WAITING" "HOLD") :children todo))
-                           ))))
-            ))
-          )
-        )
+  ;; ;; Custom agenda command definitions
+  ;; (setq org-agenda-custom-commands
+  ;;       '(("b" "Ben's TODO View"
+  ;;          ((tags "REFILE" ((org-agenda-overriding-header "Ben's Projects")
+  ;;                           (org-super-agenda-groups
+  ;;                            '((:name "Pending Refile"
+  ;;                                     :tag "REFILE")
+  ;;                              (:discard (:anything t))))))
+  ;;           (tags-todo "-REFILE/!"
+  ;;                      ((org-agenda-overriding-header "")
+  ;;                       (org-super-agenda-groups
+  ;;                        '((:name "Active Projects"
+  ;;                                 :and (:todo "TODO" :children todo))
+  ;;                          (:name "Active Tasks"
+  ;;                                 :and (:todo "TODO" :children nil))
+  ;;                          (:name "Stuck Projects"
+  ;;                                 :and (:todo ("WAITING" "HOLD") :children todo))
+  ;;                          ))))
+  ;;           ))
+  ;;         )
+  ;;       )
 
   ) ;; END ORGMODE CONFIG
 
