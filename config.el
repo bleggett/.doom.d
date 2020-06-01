@@ -126,7 +126,7 @@
 ;;BEGIN ORG-ROAM CONFIG
 (require 'org-roam-protocol)
 
-(use-package org-journal
+(use-package! org-journal
   :bind
   ("C-c n j" . org-journal-new-entry)
   :custom
@@ -136,7 +136,9 @@
   (org-journal-date-format "%A, %d %B %Y")
   )
 
-(setq org-journal-enable-agenda-integration t)
+;; (setq org-journal-enable-agenda-integration t)
+
+(add-hook! org-roam-mode 'org-roam-server-mode)
 
 (after! org-roam
   (setq org-roam-graph-viewer "open")
@@ -172,6 +174,16 @@
   (setq deft-use-filter-string-for-filename t)
   (setq deft-default-extension "org")
   )
+
+(use-package! org-roam-server
+  :ensure t
+  :config
+  (setq org-roam-server-host "localhost"
+        org-roam-server-port 9987
+        org-roam-server-authenticate nil
+        org-roam-server-label-truncate t
+        org-roam-server-label-truncate-length 60
+        org-roam-server-label-wrap-length 20))
 
 ;;BEGIN ORGMODE CONFIG
 ;; Put orgmode config here, spacemacs does not use the built-in org version
