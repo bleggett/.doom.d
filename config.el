@@ -173,6 +173,7 @@
   (setq deft-recursive t)
   (setq deft-use-filter-string-for-filename t)
   (setq deft-default-extension "org")
+  (setq deft-file-limit 10)
   )
 
 (use-package! org-roam-server
@@ -194,10 +195,10 @@
   ;; (setq org-archive-location (concat "archive/archive-"
   ;;                                    (format-time-string "%Y%m" (current-time))
   ;;                                    ".org::"))
-  ;; '(org-enforce-todo-dependencies t)
+  '(org-enforce-todo-dependencies t)
 
-  ;; ;; Tell org that we're using org-protocol
-  ;; ;; (add-to-list 'org-modules 'org-protocol)
+  ;; Tell org that we're using org-protocol
+  (add-to-list 'org-modules 'org-protocol)
 
   ;;Syntax mode highight to ORG #+BEGIN_SRC code block mappings.
   (add-to-list 'org-src-lang-modes (cons "JSON" 'json))
@@ -205,7 +206,7 @@
   (add-to-list 'org-src-lang-modes (cons "JS" 'js2))
 
   ;; ;; Whenever I invoke org-agenda, it should open in another frame
-  ;; (setq org-agenda-window-setup 'other-frame)
+  (setq org-agenda-window-setup 'other-frame)
 
   ;;Org-babel graphing stuff
   (setq org-ditaa-jar-path "~/Dropbox/org/ditaa.jar")
@@ -255,48 +256,48 @@
 
   ;; What files to include in the agenda
   ;; include subfolders, and archives for search purposes
-  ;; (let ((default-directory org-directory))
-  ;;   (setq org-agenda-files (list org-directory (expand-file-name "conferences") (expand-file-name "archive"))))
+  (let ((default-directory org-directory))
+    (setq org-agenda-files (list org-directory (expand-file-name "conferences") (expand-file-name "archive"))))
 
   ;; Enable org-super-agenda
-  ;; (org-super-agenda-mode 1)
+  (org-super-agenda-mode 1)
 
   ;; ;; Since we use multiple blocks to 'fake' a complete agenda, drop separator
-  ;; (setq org-agenda-block-separator nil)
+  (setq org-agenda-block-separator nil)
 
   ;; ;; Org super agenda headers have their own keymap - I want it to clone the `evil-org-agenda' map
-  ;; (setq org-super-agenda-header-map nil)
+  (setq org-super-agenda-header-map nil)
 
   ;; ;;Don't let children inherit tags
-  ;; ;; (setq org-use-tag-inheritance nil)
+  (setq org-use-tag-inheritance nil)
 
   ;; ;; I want refile.org's file-level :REFILE: to be inherited, but only by the top-level heading
   ;; (setq org-tags-match-list-sublevels nil)
 
   ;; ;; Whenever I invoke org-agenda, it should open in another frame
-  ;; ;; (setq org-agenda-window-setup 'other-frame)
+  ;; (setq org-agenda-window-setup 'other-frame)
 
   ;; ;; Custom agenda command definitions
-  ;; (setq org-agenda-custom-commands
-  ;;       '(("b" "Ben's TODO View"
-  ;;          ((tags "REFILE" ((org-agenda-overriding-header "Ben's Projects")
-  ;;                           (org-super-agenda-groups
-  ;;                            '((:name "Pending Refile"
-  ;;                                     :tag "REFILE")
-  ;;                              (:discard (:anything t))))))
-  ;;           (tags-todo "-REFILE/!"
-  ;;                      ((org-agenda-overriding-header "")
-  ;;                       (org-super-agenda-groups
-  ;;                        '((:name "Active Projects"
-  ;;                                 :and (:todo "TODO" :children todo))
-  ;;                          (:name "Active Tasks"
-  ;;                                 :and (:todo "TODO" :children nil))
-  ;;                          (:name "Stuck Projects"
-  ;;                                 :and (:todo ("WAITING" "HOLD") :children todo))
-  ;;                          ))))
-  ;;           ))
-  ;;         )
-  ;;       )
+  (setq org-agenda-custom-commands
+        '(("b" "Ben's TODO View"
+           ((tags "REFILE" ((org-agenda-overriding-header "Ben's Projects")
+                            (org-super-agenda-groups
+                             '((:name "Pending Refile"
+                                      :tag "REFILE")
+                               (:discard (:anything t))))))
+            (tags-todo "-REFILE/!"
+                       ((org-agenda-overriding-header "")
+                        (org-super-agenda-groups
+                         '((:name "Active Projects"
+                                  :and (:todo "TODO" :children todo))
+                           (:name "Active Tasks"
+                                  :and (:todo "TODO" :children nil))
+                           (:name "Stuck Projects"
+                                  :and (:todo ("WAITING" "HOLD") :children todo))
+                           ))))
+            ))
+          )
+        )
 
   ) ;; END ORGMODE CONFIG
 

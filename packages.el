@@ -56,4 +56,5 @@
 ;; (package! builtin-package :disable t)
 
 (package! org-roam-server)
+(package! org-super-agenda)
 (package! org-journal)
