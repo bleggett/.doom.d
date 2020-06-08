@@ -35,6 +35,9 @@
   ;; Twiddle evil cursor visuals for insert state
   (setq evil-insert-state-cursor '(bar "orange"))
 
+  ;; DO NOT USE, WEIRD
+  ;; (setq evil-want-minibuffer 1)
+
   ;; I want C-w o to close other windows
   (define-key evil-window-map "o" 'delete-other-windows)
 
@@ -66,12 +69,14 @@
    '(company-tooltip-common-selection
      ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
   )
+
 ;;When I quit, don't ask me if I want to kill processes
 (setq confirm-kill-processes nil)
 
 ;; Configure grip markdown previewer to pull Github API token from ~/.authinfo.gpg
 (use-package! grip-mode
-  :hook (prog-mode . grip-mode-hook)
+  :ensure t
+  :hook ((markdown-mode) . grip-mode)
   :config
   (let ((credential (auth-source-user-and-password "api.github.com")))
     (setq grip-github-user (car credential)
