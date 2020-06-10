@@ -187,6 +187,16 @@
  :leader
  :prefix "n"
  :desc "Widen buffer"           "N" #'widen)
+
+(map!
+ :leader
+ :prefix "g"
+ :desc "Magit Forge pull"           "f" #'forge-pull)
+
+(map!
+ :leader
+ :prefix "g"
+ :desc "Magit Forge add repo"           "a" #'forge-add-repository)
 ;; END Custom keybinds
 
 
