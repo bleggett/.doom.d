@@ -75,8 +75,7 @@
 
 ;; Configure grip markdown previewer to pull Github API token from ~/.authinfo.gpg
 (use-package! grip-mode
-  :ensure t
-  :hook ((markdown-mode) . grip-mode)
+  :defer
   :config
   (let ((credential (auth-source-user-and-password "api.github.com")))
     (setq grip-github-user (car credential)
@@ -132,6 +131,7 @@
 (require 'org-roam-protocol)
 
 (use-package! org-journal
+  :defer
   :bind
   ("C-c n j" . org-journal-new-entry)
   :custom
@@ -141,7 +141,7 @@
   (org-journal-date-format "%A, %d %B %Y")
   )
 
-;; (setq org-journal-enable-agenda-integration t)
+ (setq org-journal-enable-agenda-integration t)
 
 (add-hook! org-roam-mode 'org-roam-server-mode)
 
@@ -158,7 +158,8 @@
         :desc "org-roam-insert" "i" #'org-roam-insert
         :desc "org-roam-search" "s" #'deft
         :desc "org-roam-yesterday" "y" #'org-roam-dailies-yesterday
-        :desc "org-roam-today" "t" #'org-roam-dailies-today
+        ;; :desc "org-roam-today" "t" #'org-roam-dailies-today
+        :desc "org-roam-today" "t" #'org-journal-new-entry
         :desc "org-roam-capture" "c" #'org-roam-capture)
 
   (setq org-roam-capture-ref-templates
@@ -182,7 +183,7 @@
   )
 
 (use-package! org-roam-server
-  :ensure t
+  :defer
   :config
   (setq org-roam-server-host "localhost"
         org-roam-server-port 9987
@@ -225,9 +226,9 @@
         (org-display-inline-images)
       (error nil)))
 
-  (org-babel-do-load-languages
-   (quote org-babel-load-languages)
-   (quote ((ditaa . t))))
+  ;; (org-babel-do-load-languages
+  ;;  (quote org-babel-load-languages)
+  ;;  (quote ((ditaa . t))))
 
   ;; Do not prompt to confirm evaluation
   ;; This may be dangerous - make sure you understand the consequences
@@ -360,7 +361,7 @@
   (add-hook! 'cfn-yaml-mode-hook 'flycheck-mode)
 
 
-  (setq-default flycheck-markdown-markdownlint-cli-config ".markdownlint.json")
+  (setq flycheck-markdown-markdownlint-cli-config ".markdownlint.json")
   )
 
 ;; When I switch Counsel/Projectile projects, open Magit buffer by default
