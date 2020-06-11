@@ -188,15 +188,17 @@
  :prefix "n"
  :desc "Widen buffer"           "N" #'widen)
 
+;; Magit forge binds (under SPC-g-f)
 (map!
  :leader
  :prefix "g"
- :desc "Magit Forge pull"           "f" #'forge-pull)
+ (:prefix ("f" . "Forge")
+  :desc "Forge add repo" "a" #'forge-add-repository
+  :desc "Forge pull" "f" #'forge-pull
+  :desc "Forge browse post" "b" #'forge-browse-post
+  :desc "Forge create pull request" "r" #'forge-create-pullreq
+  ))
 
-(map!
- :leader
- :prefix "g"
- :desc "Magit Forge add repo"           "a" #'forge-add-repository)
 ;; END Custom keybinds
 
 
