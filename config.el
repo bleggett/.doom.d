@@ -26,7 +26,7 @@
   (setq mac-option-modifier nil)
 
   ;;This must be set to True for the emacs-mac port in order to get proper macOS maximize behavior
-  (menu-bar-mode t)
+  ;; (menu-bar-mode t)
   )
 
 ;;Render images
@@ -67,6 +67,9 @@
 ;; Delete to (freedesktop.org) trash
 (setq delete-by-moving-to-trash t)
 
+;; DON'T HIDE THINGS FROM ME THAT'S NOT HOW RELATIONSHIPS WORK
+(setq dired-omit-mode nil)
+
 ;; Indentation tweaks
 (setq-default indent-tabs-mode nil)
 (defun my-setup-indent (n)
@@ -99,15 +102,15 @@
 
 ;;posframe stuff
 
-(use-package! ivy-posframe
-  :defer
-  :config
-  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))
-        ivy-posframe-parameters
-          '((left-fringe . 8)
-            (right-fringe . 8))))
+;; (use-package! ivy-posframe
+;;   :defer
+;;   :config
+;;   (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))
+;;         ivy-posframe-parameters
+;;           '((left-fringe . 8)
+;;             (right-fringe . 8))))
 
-(ivy-posframe-mode 1)
+;; (ivy-posframe-mode 1)
 ;; END GENERAL EMACS CONFIG
 
 ;; BEGIN PACKAGE CONFIG
