@@ -66,6 +66,9 @@
 
 (display-time-mode 1)
 
+;; Prefer SVG mermaid diagrams
+(setq mermaid-output-format ".svg")
+
 ;; Delete to (freedesktop.org) trash
 (setq delete-by-moving-to-trash t)
 

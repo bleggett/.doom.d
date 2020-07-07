@@ -58,3 +58,4 @@
 (package! org-roam-server)
 (package! org-super-agenda)
 (package! mermaid-mode)
+(package! vterm-toggle)
