@@ -50,6 +50,8 @@
 ;; Autosave dirty Org buffers when they are no longer visible
 (add-to-list 'focus-out-hook (lambda () (save-some-buffers t nil)))
 
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
 ;;When I quit, don't ask me if I want to kill processes
 (setq confirm-kill-processes nil)
 
@@ -72,25 +74,25 @@
 
 ;; Indentation tweaks
 (setq-default indent-tabs-mode nil)
-(defun my-setup-indent (n)
-  ;;General tab size
-  (setq-default tab-width n)
-  ;; java/c/c++
-  (setq-default c-basic-offset n)
-  (setq-default go-tab-width n)
-  ;; web development
-  (setq-default coffee-tab-width n) ; coffeescript
-  (setq-default javascript-indent-level n) ; javascript-mode
-  (setq-default js-indent-level n) ; js-mode
-  (setq-default js2-basic-offset n) ; js2-mode, in latest js2-mode, it's alias of js-indent-level
-  (setq-default web-mode-markup-indent-offset n) ; web-mode, html tag in html file
-  (setq-default web-mode-css-indent-offset n) ; web-mode, css in html file
-  (setq-default web-mode-code-indent-offset n) ; web-mode, js code in html file
-  (setq-default css-indent-offset n) ; css-mode
-  (setq-default typescript-indent-level n)
+;; (defun my-setup-indent (n)
+;;   ;;General tab size
+;;   (setq-default tab-width n)
+;;   ;; java/c/c++
+;;   (setq-default c-basic-offset n)
+;;   (setq-default go-tab-width n)
+;;   ;; web development
+;;   (setq-default coffee-tab-width n) ; coffeescript
+;;   ;; (setq-default javascript-indent-level n) ; javascript-mode
+;;   ;; (setq-default js-indent-level n) ; js-mode
+;;   ;; (setq-default js2-basic-offset n) ; js2-mode, in latest js2-mode, it's alias of js-indent-level
+;;   (setq-default web-mode-markup-indent-offset n) ; web-mode, html tag in html file
+;;   (setq-default web-mode-css-indent-offset n) ; web-mode, css in html file
+;;   (setq-default web-mode-code-indent-offset n) ; web-mode, js code in html file
+;;   (setq-default css-indent-offset n) ; css-mode
+;;   ;; (setq-default typescript-indent-level n)
 
-  )
-(my-setup-indent 4)
+;;   )
+;; (my-setup-indent 4)
 
 ;; Define a custom Cloudformation minor mode that runs `cfn-lint'
 (define-derived-mode cfn-yaml-mode yaml-mode
@@ -212,7 +214,12 @@
   :desc "Forge pull" "f" #'forge-pull
   :desc "Forge browse post" "b" #'forge-browse-post
   :desc "Forge create pull request" "r" #'forge-create-pullreq
-  ))
+  :desc "Forge create issue" "i" #'forge-create-issue
+ (:prefix ("s" . "Forge Search")
+  :desc "Forge search issues" "i" #'forge-visit-issue
+  :desc "Forge search PRs" "f" #'forge-visit-pullreq
+  )
+ ))
 
 ;; END Custom keybinds
 
