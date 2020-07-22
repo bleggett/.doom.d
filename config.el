@@ -66,6 +66,13 @@
 
 (display-time-mode 1)
 
+(add-hook! go-mode
+  (setq gofmt-command "goimports")
+  (gofmt-before-save)
+  ;;Workaround for gopls and emacs 27
+  (setq lsp-gopls-codelens nil)
+  )
+
 ;; Prefer SVG mermaid diagrams
 (setq mermaid-output-format ".svg")
 
@@ -161,6 +168,7 @@
 
 
   (setq flycheck-markdown-markdownlint-cli-config ".markdownlint.json")
+  (setq flycheck-golangci-lint-enable-linters '("goimports" "godox" "bodyclose" "gosec"))
   )
 
 ;; When I switch Counsel/Projectile projects, open Magit buffer by default
