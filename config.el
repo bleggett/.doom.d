@@ -66,11 +66,17 @@
 
 (display-time-mode 1)
 
+;; Go mode hook
 (add-hook! go-mode
   (setq gofmt-command "goimports")
   (gofmt-before-save)
   ;;Workaround for gopls and emacs 27
   (setq lsp-gopls-codelens nil)
+  )
+
+;;Rust mode hook
+(add-hook! go-mode
+  (setq rustic-lsp-server 'rust-analyzer)
   )
 
 ;; Prefer SVG mermaid diagrams
