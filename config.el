@@ -346,8 +346,7 @@
 
   ;; What files to include in the agenda
   ;; include subfolders, and archives for search purposes
-  (let ((default-directory org-directory))
-    (setq org-agenda-files (list org-directory (expand-file-name "conferences") (expand-file-name "archive"))))
+  (setq org-agenda-files (list org-directory (expand-file-name "conferences") (expand-file-name "archive")))
 
   ;; ;; Custom agenda command definitions
   (setq org-agenda-custom-commands
