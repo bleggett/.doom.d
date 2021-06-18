@@ -17,7 +17,24 @@
 (setq display-line-numbers-type nil)
 
 ;;GPG Key ID for encryption
-(setq epa-file-encrypt-to '8F92EEB450612F77)
+(setq epg-file-encrypt-to '8F92EEB450612F77)
+(setf epg-pinentry-mode nil)
+
+;;LSP perf thing
+(setq read-process-output-max (* 1024 1024))
+
+(after! lsp
+        (lsp-register-custom-settings
+        '(("gopls.experimentalWorkspaceModule" t t)))
+)
+
+;;cc-mode lsp/clang stuff
+(setq lsp-clients-clangd-args '("-j=3"
+                                "--background-index"
+                                "--clang-tidy"
+                                "--completion-style=detailed"
+                                "--header-insertion=never"))
+(after! lsp-clangd (set-lsp-priority! 'clangd 2))
 
 ;; macOS specific config
 (when (eq system-type 'darwin)
@@ -74,11 +91,14 @@
   (setq lsp-gopls-codelens nil)
   )
 
+;;Prettier JS mode hook
+;;
+(add-hook! 'js2-mode-hook 'prettier-js-mode)
+
 ;;Rust mode hook
 (add-hook! go-mode
   (setq rustic-lsp-server 'rust-analyzer)
   )
-
 ;; Prefer SVG mermaid diagrams
 (setq mermaid-output-format ".svg")
 
@@ -140,6 +160,10 @@
    '(company-tooltip-common-selection
      ((t (:inherit company-tooltip-selection :weight bold :underline nil)))))
   )
+
+;; I do not want company completion for $PATH binaries in shell mode, it's slow as ass
+(after! sh-script
+  (set-company-backend! 'sh-mode nil))
 
 ;; Configure grip markdown previewer to pull Github API token from ~/.authinfo.gpg
 (use-package! grip-mode
@@ -256,6 +280,7 @@
 (add-hook! org-roam-mode 'org-roam-server-mode)
 
 (after! org-roam
+  (setq org-roam-db-update-method 'immediate)
   (setq org-roam-graph-viewer "open")
   (setq org-roam-directory "~/Dropbox/org-roam")
   (map! :leader
@@ -289,6 +314,7 @@
   (setq deft-recursive t)
   (setq deft-use-filter-string-for-filename t)
   (setq deft-default-extension "org")
+  (setq deft-extensions '("org" "gpg"))
   (setq deft-file-limit 10)
   )
 
@@ -308,7 +334,6 @@
 ;;BEGIN ORGMODE CONFIG
 ;; Put orgmode config here, spacemacs does not use the built-in org version
 (after! org
-  (setq org-directory "~/Dropbox/org-roam")
 
   ;; ;; (setq org-default-notes-file "~/Dropbox/org/refile.org")
   ;; (setq org-archive-location (concat "archive/archive-"
@@ -343,6 +368,11 @@
   (setq org-todo-keywords
         (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
                 (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)"))))
+
+  ;; Include ".org.gpg" files in agenda query
+  (unless (string-match-p "\\.gpg" org-agenda-file-regexp)
+    (setq org-agenda-file-regexp
+          (replace-regexp-in-string "\\\\\\.org" "\\\\.org\\\\(\\\\.gpg\\\\)?" org-agenda-file-regexp)))
 
   ;; What files to include in the agenda
   ;; include subfolders, and archives for search purposes

@@ -59,3 +59,4 @@
 (package! org-super-agenda)
 (package! mermaid-mode)
 (package! vterm-toggle)
+(package! prettier-js)

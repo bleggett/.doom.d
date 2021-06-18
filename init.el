@@ -90,7 +90,7 @@
        ;;ansible
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
-       ;;docker
+       docker
        editorconfig      ; let someone else argue about tabs vs spaces
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
@@ -115,7 +115,8 @@
 
        :lang
        ;;agda              ; types of types of types of types...
-       ;;cc                ; C/C++/Obj-C madness
+       (cc                ; C/C++/Obj-C madness
+        +lsp)
        ;;clojure           ; java with a lisp
        ;;common-lisp       ; if you've seen one lisp, you've seen them all
        ;;coq               ; proofs-as-programs
@@ -137,13 +138,14 @@
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ;
-       json              ; At least it ain't XML
+       (json              ; At least it ain't XML
+        +lsp)
        (java +meghanada) ; the poster child for carpal tunnel syndrome
        (javascript        ; all(hope(abandon(ye(who(enter(here))))))
         +lsp)
        ;;julia             ; a better, faster MATLAB
-       (kotlin
-        +lsp) ; a better, slicker Java(Script)
+       ;; (kotlin
+       ;;  +lsp) ; a better, slicker Java(Script)
        ;;latex             ; writing papers in Emacs has never been so fun
        ;;lean
        ;;factor
@@ -152,7 +154,7 @@
        (markdown          ; writing docs for people to ignore
         +grip)
        ;;nim               ; python + lisp at the speed of c
-       nix               ; I hereby declare "nix geht mehr!"
+       ;; nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
         +dragndrop       ; drag & drop files/images into org buffers
@@ -177,8 +179,8 @@
        ;;(ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
         +lsp)
-       (scala             ; java, but good
-        +lsp)
+       ;; (scala             ; java, but good
+       ;;  +lsp)
        ;scheme            ; a fully conniving family of lisps
        sh                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
@@ -187,7 +189,8 @@
        ;;terra             ; Earth and Moon in alignment for performance.
        (web               ; the tubes
         +lsp)
-       yaml              ; JSON, but readable
+       (yaml              ; JSON, but readable
+        +lsp)
 
 
        :email
@@ -208,3 +211,6 @@
 ;;I want to inherit SSH_AUTH_SOCK env var from surrounding environment
 (when noninteractive
   (add-to-list 'doom-env-whitelist "^SSH_"))
+
+;; As per DOOM config, `org-directory' must be changed before Org is loaded, not after
+(setq org-directory "~/Dropbox/org-roam")
