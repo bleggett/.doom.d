@@ -55,8 +55,8 @@
 ;; (package! another-package :recipe (:host github :repo "username/repo"))
 ;; (package! builtin-package :disable t)
 
+;; (package! vterm-toggle)
 (package! org-roam-server)
 (package! org-super-agenda)
 (package! mermaid-mode)
-(package! vterm-toggle)
 (package! prettier-js)

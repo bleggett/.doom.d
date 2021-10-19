@@ -79,7 +79,7 @@
        ;;eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       vterm             ; the best terminal emulation in Emacs
+       ;;vterm             ; the best terminal emulation in Emacs
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
@@ -140,7 +140,8 @@
        ;;idris             ;
        (json              ; At least it ain't XML
         +lsp)
-       (java +meghanada) ; the poster child for carpal tunnel syndrome
+       (java
+        +lsp) ; the poster child for carpal tunnel syndrome
        (javascript        ; all(hope(abandon(ye(who(enter(here))))))
         +lsp)
        ;;julia             ; a better, faster MATLAB
