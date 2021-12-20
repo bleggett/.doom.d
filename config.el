@@ -23,11 +23,6 @@
 ;;LSP perf thing
 (setq read-process-output-max (* 1024 1024))
 
-(after! lsp
-        (lsp-register-custom-settings
-        '(("gopls.experimentalWorkspaceModule" t t)))
-)
-
 ;;cc-mode lsp/clang stuff
 (setq lsp-clients-clangd-args '("-j=3"
                                 "--background-index"
@@ -88,8 +83,16 @@
 (add-hook! go-mode
   (setq gofmt-command "goimports")
   (gofmt-before-save)
-  ;;Workaround for gopls and emacs 27
-  (setq lsp-gopls-codelens nil)
+  )
+
+;; LSP overrides
+(add-hook! lsp-mode
+
+  (lsp-register-custom-settings
+   '(("gopls.experimentalWorkspaceModule" t t)))
+
+  ;; ;;Workaround for gopls and emacs 27
+  ;; (setq lsp-gopls-codelens nil)
   )
 
 ;;Prettier JS mode hook
@@ -97,7 +100,7 @@
 (add-hook! 'js2-mode-hook 'prettier-js-mode)
 
 ;;Rust mode hook
-(add-hook! go-mode
+(add-hook! rust-mode
   (setq rustic-lsp-server 'rust-analyzer)
   )
 ;; Prefer SVG mermaid diagrams
@@ -175,6 +178,18 @@
           grip-github-password (cadr credential)))
   )
 
+;; ;; Be smarter about discovering Go projects
+;; (defun custom/find-go-dir (dir)
+;;   (if (equal dir "/") nil
+;;     (if (member "go.mod" (directory-files dir)) dir
+;;       (custom/find-go-dir (file-name-directory (string-trim-right dir "/"))))))
+
+;; ;; Make projectile smarter about Go projects
+;; (use-package! projectile
+;;   :defer
+;;   :config (progn
+;;             (add-to-list 'projectile-project-root-functions 'custom/find-go-dir)
+;;             ))
 (after! flycheck
   ;; Set up cfn-lint integration if flycheck is installed
   ;; Get flycheck here https://www.flycheck.org/
