@@ -266,6 +266,12 @@
  :prefix "b"
  :desc "Rename buffer"          "R" #'rename-buffer)
 
+;; Emacs process stuff (under SPC-P)
+(map!
+ :leader
+ :prefix ("P" . "Emacs process management")
+ :desc "List emacs processes"          "l" #'list-processes)
+
 ;; Magit forge binds (under SPC-g-f)
 (map!
  :leader
