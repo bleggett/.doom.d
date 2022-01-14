@@ -59,7 +59,6 @@
   (define-key evil-window-map "F" 'make-frame)
   )
 
-
 ;; Autosave dirty Org buffers when they are no longer visible
 (add-to-list 'focus-out-hook (lambda () (save-some-buffers t nil)))
 
@@ -261,6 +260,11 @@
  :leader
  :prefix "n"
  :desc "Widen buffer"           "N" #'widen)
+
+(map!
+ :leader
+ :prefix "b"
+ :desc "Rename buffer"          "R" #'rename-buffer)
 
 ;; Magit forge binds (under SPC-g-f)
 (map!
