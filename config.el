@@ -66,7 +66,7 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 ;;When I quit, don't ask me if I want to kill processes
-(setq confirm-kill-processes nil)
+;; (setq confirm-kill-processes nil)
 
 ;; Format Go files on save
 ;; (add-hook! 'before-save-hook #'gofmt-before-save)
