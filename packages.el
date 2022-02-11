@@ -57,7 +57,9 @@
 ;; (package! builtin-package :disable t)
 
 ;; (package! vterm-toggle)
-(package! org-roam-server)
+;; (unpin! org-roam)
+;; (package! org-roam-ui)
 (package! org-super-agenda)
 (package! mermaid-mode)
 (package! prettier-js)
+(package! kubel)

@@ -2,7 +2,6 @@
 
 ;; Place your private configuration here
 
-
 ;; BEGIN GENERAL EMACS CONFIG
 ;;Use custom font
 (setq doom-font (font-spec :family "Droid Sans Mono" :size 17))
@@ -303,7 +302,22 @@
         org-journal-date-format "%A, %d %B %Y"
         org-journal-enable-agenda-integration t))
 
-(add-hook! org-roam-mode 'org-roam-server-mode)
+;; ;; (add-hook! org-roam-mode 'org-roam-server-mode)
+;; (use-package! websocket
+;;     :after org-roam)
+
+;; (use-package! org-roam-ui
+;;     :after org-roam ;; or :after org
+;; ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;; ;;         a hookable mode anymore, you're advised to pick something yourself
+;; ;;         if you don't care about startup time, use
+;; ;;  :hook (after-init . org-roam-ui-mode)
+;;     :hook (org-mode . org-roam-ui-mode)
+;;     :config
+;;     (setq org-roam-ui-sync-theme t
+;;           org-roam-ui-follow t
+;;           org-roam-ui-update-on-save t
+;;           org-roam-ui-open-on-start t))
 
 (after! org-roam
   (setq org-roam-db-update-method 'immediate)
@@ -311,49 +325,40 @@
   (setq org-roam-directory "~/Dropbox/org-roam")
   (map! :leader
         :prefix "n"
-        :desc "org-roam" "l" #'org-roam
-        :desc "org-roam-insert" "i" #'org-roam-insert
-        :desc "org-roam-switch-to-buffer" "b" #'org-roam-switch-to-buffer
-        :desc "org-roam-find-file" "f" #'org-roam-find-file
-        :desc "org-roam-show-graph" "g" #'org-roam-show-graph
-        :desc "org-roam-insert" "i" #'org-roam-insert
+        :desc "org-roam-find-node" "f" #'org-roam-node-find
+        :desc "org-roam-show-graph" "g" #'org-roam-graph
+        :desc "org-roam-insert" "i" #'org-roam-node-insert
         :desc "org-roam-search" "s" #'deft
-        :desc "org-roam-yesterday" "y" #'org-roam-dailies-yesterday
-        ;; :desc "org-roam-today" "t" #'org-roam-dailies-today
-        :desc "org-roam-today" "t" #'org-journal-new-entry
+        :desc "org-roam-yesterday" "y" #'org-roam-dailies-find-yesterday
+        :desc "org-roam-today" "t" #'org-roam-dailies-find-today
+        :desc "org-roam-tomorrow" "T" #'org-roam-dailies-find-tomorrow
         :desc "org-roam-capture" "c" #'org-roam-capture)
 
   (setq org-roam-capture-ref-templates
-        '(("r" "ref" plain (function org-roam-capture--get-point)
-           "%x"
-           :file-name "websites/${slug}"
-           :head "#+TITLE: ${title}
-    #+ROAM_KEY: ${ref}
-    - source :: ${ref}"
-           :unnarrowed t
-           :immediate-finish t))
-        )
-  )
+        ;;template for capturing URL with optional body selection
+        ;;Browser bookmarklet:
+        ;;javascript:location.href = 'org-protocol://roam-ref?template=r&ref=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) + '&body=' + encodeURIComponent(window.getSelection())
+        '(("r" "ref" plain "- Captured %T:\n#+BEGIN_QUOTE\n${body}\n#+END_QUOTE\n %?"
+                :target (file+head "web-captures/${slug}.org"
+                        "#+title: ${title}\n#+url: ${ref}\n#+capture_date: %T\n-----------\n"
+                        )
+                :immediate-finish t
+                :empty-lines-before 1
+                :unnarrowed t)))
+)
 
 (after! deft
-  (setq deft-directory "~/Dropbox/org-roam/")
+  (setq deft-directory org-roam-directory)
   (setq deft-recursive t)
+  (setq deft-strip-summary-regexp ":PROPERTIES:\n\\(.+\n\\)+:END:\n")
   (setq deft-use-filter-string-for-filename t)
   (setq deft-default-extension "org")
   (setq deft-extensions '("org" "gpg"))
   (setq deft-file-limit 10)
   )
 
-(use-package! org-roam-server
-  :defer
-  :config
-  (setq org-roam-server-host "localhost"
-        org-roam-server-port 9987
-        org-roam-server-authenticate nil
-        org-roam-server-label-truncate t
-        org-roam-server-label-truncate-length 60
-        org-roam-server-label-wrap-length 20))
-
+;; Close backlinks buf automatically please
+(setq org-roam-auto-backlinks-buffer t)
 ;;END ORG-ROAM CONFIG
 
 
@@ -437,3 +442,6 @@
         ;;Don't let children inherit tags
         org-use-tag-inheritance nil))
 ;; END ORGMODE CONFIG
+
+;; pip-requrements package tends to hang emacs for me if this is enabled
+(advice-add #'pip-requirements-fetch-packages :override #'ignore)

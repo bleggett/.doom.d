@@ -23,8 +23,10 @@
        company           ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
+       ;;vertico
        (ivy               ; a search engine for love and life
-        +prescient)
+        +prescient
+	+all-the-icons-ivy)
         ;; +childframe)
 
        :ui
@@ -32,7 +34,8 @@
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
        doom-quit         ; DOOM quit-message prompts when you quit Emacs
-       ;;fill-column       ; a `fill-column' indicator
+       (emoji 
+       	+unicode)  ; 🙂
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
@@ -83,11 +86,13 @@
 
        :checkers
        syntax              ; tasing you for every semicolon you forget
-       spell             ; tasing you for misspelling mispelling
+       (spell
+         +flyspell)      ; tasing you for misspelling mispelling
        grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
+       ;;biblio            ; Writes a PhD for you (citation needed)
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        ;;direnv
        docker
@@ -115,6 +120,7 @@
 
        :lang
        ;;agda              ; types of types of types of types...
+       ;;beancount         ; mind the GAAP
        (cc                ; C/C++/Obj-C madness
         +lsp)
        ;;clojure           ; java with a lisp
@@ -124,20 +130,23 @@
        ;;csharp            ; unity, .NET, and mono shenanigans
        data              ; config/data formats
        ;;(dart +flutter)   ; paint ui and not much else
+       ;;dhall
        ;;elixir            ; erlang done right
        ;;elm               ; care for a cup of TEA?
        emacs-lisp        ; drown in parentheses
        ;;erlang            ; an elegant language for a more civilized age
        ;;ess               ; emacs speaks statistics
+       ;;factor
        ;;faust             ; dsp, but you get to keep your soul
-       ;;fsharp           ; ML stands for Microsoft's Language
+       ;;fortran           ; in FORTRAN, GOD is REAL (unless declared INTEGER)
+       ;;fsharp            ; ML stands for Microsoft's Language
        ;;fstar             ; (dependent) types and (monadic) effects and Z3
        ;;gdscript          ; the language you waited for
        (go                ; the hipster dialect
         +lsp)
-       ;;(haskell +dante)  ; a language that's lazier than I am
+       ;;(haskell +lsp)    ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
-       ;;idris             ;
+       ;;idris             ; a language you can depend on
        (json              ; At least it ain't XML
         +lsp)
        (java
@@ -148,22 +157,21 @@
        ;; (kotlin
        ;;  +lsp) ; a better, slicker Java(Script)
        ;;latex             ; writing papers in Emacs has never been so fun
-       ;;lean
-       ;;factor
-       ;;ledger            ; an accounting system in Emacs
+       ;;lean              ; for folks with too much to prove
+       ;;ledger            ; be audit you can be
        ;;lua               ; one-based indices? one-based indices
        (markdown          ; writing docs for people to ignore
         +grip)
        ;;nim               ; python + lisp at the speed of c
-       ;; nix               ; I hereby declare "nix geht mehr!"
+       ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
        (org              ; organize your plain life in plain text
         +dragndrop       ; drag & drop files/images into org buffers
-        +hugo            ; use Emacs for hugo blogging
+        ;;+hugo            ; use Emacs for hugo blogging
         ;;+jupyter        ; ipython/jupyter support for babel
         +journal
         +pandoc          ; export-with-pandoc support
-        +roam
+        +roam2
         ;;+pomodoro        ; be fruitful with the tomato technique
         +present)        ; using org-mode for presentations
        ;;perl              ; write code no one else can comprehend
@@ -182,7 +190,7 @@
         +lsp)
        ;; (scala             ; java, but good
        ;;  +lsp)
-       ;scheme            ; a fully conniving family of lisps
+       ;;(scheme +guile)   ; a fully conniving family of lisps
        sh                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
@@ -193,14 +201,15 @@
        (yaml              ; JSON, but readable
         +lsp)
 
-
        :email
-       ;;(mu4e +gmail)
+       ;;(mu4e +org +gmail)
        ;;notmuch
        ;;(wanderlust +gmail)
 
        :app
        ;;calendar
+       ;;emms
+       ;;everywhere        ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
        ;;(rss +org)        ; emacs as an RSS reader
        ;;twitter           ; twitter client https://twitter.com/vnought
