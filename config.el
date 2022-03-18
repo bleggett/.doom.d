@@ -329,9 +329,9 @@
         :desc "org-roam-show-graph" "g" #'org-roam-graph
         :desc "org-roam-insert" "i" #'org-roam-node-insert
         :desc "org-roam-search" "s" #'deft
-        :desc "org-roam-yesterday" "y" #'org-roam-dailies-find-yesterday
-        :desc "org-roam-today" "t" #'org-roam-dailies-find-today
-        :desc "org-roam-tomorrow" "T" #'org-roam-dailies-find-tomorrow
+        :desc "org-roam-yesterday" "y" #'org-roam-dailies-goto-yesterday
+        :desc "org-roam-today" "t" #'org-roam-dailies-goto-today
+        :desc "org-roam-tomorrow" "T" #'org-roam-dailies-goto-tomorrow
         :desc "org-roam-capture" "c" #'org-roam-capture)
 
   (setq org-roam-capture-ref-templates

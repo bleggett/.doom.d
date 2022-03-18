@@ -39,8 +39,7 @@
 ;; If you'd like to disable a package included with Doom, for whatever reason,
 ;; you can do so here with the `:disable' property:
 ;(package! builtin-package :disable t)
-;; BML - 1/2022 - `pip-requirements' causes hangs when opening requirements files?
-(package! pip-requirements :disable t)
+;
 ;; You can override the recipe of a built in package without having to specify
 ;; all the properties for `:recipe'. These will inherit the rest of its recipe
 ;; from Doom or MELPA/ELPA/Emacsmirror:
