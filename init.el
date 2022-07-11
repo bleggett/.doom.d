@@ -219,8 +219,10 @@
        (default +bindings +smartparens))
 
 ;;I want to inherit SSH_AUTH_SOCK env var from surrounding environment
-(when noninteractive
-  (add-to-list 'doom-env-whitelist "^SSH_"))
-
+;;https://github.com/doomemacs/doomemacs/commit/19ce459138673d6a617fa342c533ee59e20eee86?utm_source=pocket_mylist
+;;(when noninteractive
+;;  (add-to-list 'doom-env-allow "^SSH_"))
+(after! core-cli-env
+  (add-to-list 'doom-env-allow "^SSH_"))
 ;; As per DOOM config, `org-directory' must be changed before Org is loaded, not after
 (setq org-directory "~/Dropbox/org-roam")
