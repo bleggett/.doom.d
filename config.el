@@ -210,9 +210,8 @@
   (add-to-list 'flycheck-checkers 'cfn-lint)
   (add-hook! 'cfn-yaml-mode-hook 'flycheck-mode)
 
-
   (setq flycheck-markdown-markdownlint-cli-config ".markdownlint.json")
-  (setq flycheck-golangci-lint-enable-linters '("goimports" "godox" "bodyclose" "gosec"))
+  (setq flycheck-golangci-lint-enable-linters '("goimports" "godox" "bodyclose" "gosec" "misspell" "exportloopref" "gofmt" "ifshort"))
   )
 
 ;; When I switch Counsel/Projectile projects, open Magit buffer by default

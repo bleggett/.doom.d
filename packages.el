@@ -62,3 +62,4 @@
 (package! mermaid-mode)
 (package! prettier-js)
 (package! kubel)
+(package! protobuf-mode)
