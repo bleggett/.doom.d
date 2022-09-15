@@ -83,15 +83,15 @@
   (gofmt-before-save)
   )
 
-;; LSP overrides
-(add-hook! lsp-mode
+;; ;; LSP overrides
+;; (add-hook! lsp-mode
 
-  (lsp-register-custom-settings
-   '(("gopls.experimentalWorkspaceModule" t t)))
+;;   (lsp-register-custom-settings
+;;    '(("gopls.experimentalWorkspaceModule" t t)))
 
-  ;; ;;Workaround for gopls and emacs 27
-  ;; (setq lsp-gopls-codelens nil)
-  )
+;;   ;; ;;Workaround for gopls and emacs 27
+;;   ;; (setq lsp-gopls-codelens nil)
+;;   )
 
 ;;Prettier JS mode hook
 ;;
