@@ -16,7 +16,7 @@
 (setq display-line-numbers-type nil)
 
 ;;GPG Key ID for encryption
-(setq epg-file-encrypt-to '8F92EEB450612F77)
+(setq epg-file-encrypt-to 'algosystem@gmail.com)
 (setf epg-pinentry-mode nil)
 
 ;;LSP perf thing
