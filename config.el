@@ -286,6 +286,9 @@
   )
  ))
 
+;; For when Vim is in vterm and we need an unswallowed escape
+(global-set-key (kbd "C-<escape>") 'vterm-send-escape)
+
 ;; END Custom keybinds
 
 
