@@ -224,3 +224,6 @@
   (add-to-list 'doom-env-allow "^SSH_"))
 ;; As per DOOM config, `org-directory' must be changed before Org is loaded, not after
 (setq org-directory "~/Dropbox/org-roam")
+
+;; Rust format on save
+(setq rust-format-on-save t)
