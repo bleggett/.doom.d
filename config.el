@@ -447,3 +447,13 @@
 
 ;; pip-requrements package tends to hang emacs for me if this is enabled
 (advice-add #'pip-requirements-fetch-packages :override #'ignore)
+
+;; Temp fix for "too many open files"
+;; https://www.blogbyben.com/2022/05/gotcha-emacs-on-mac-os-too-many-files.html
+(defun file-notify-rm-all-watches ()
+  "Remove all existing file notification watches from Emacs."
+  (interactive)
+  (maphash
+   (lambda (key _value)
+     (file-notify-rm-watch key))
+   file-notify-descriptors))
