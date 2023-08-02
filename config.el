@@ -229,6 +229,10 @@
 ;;   :config (progn
 ;;             (add-to-list 'projectile-project-root-functions 'custom/find-go-dir)
 ;;             ))
+
+;; Use dap debugger
+(require 'dap-dlv-go)
+
 (after! flycheck
   ;; Set up cfn-lint integration if flycheck is installed
   ;; Get flycheck here https://www.flycheck.org/
