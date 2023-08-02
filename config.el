@@ -77,6 +77,47 @@
 
 (display-time-mode 1)
 
+(defun my:see-all-whitespace () (interactive)
+       (setq whitespace-style (default-value 'whitespace-style))
+       (setq whitespace-display-mappings (default-value 'whitespace-display-mappings))
+       (whitespace-mode 'toggle))
+
+
+;; Get emacs and linux C style to play nice
+;; https://www.kernel.org/doc/html/v4.10/process/coding-style.html?highlight=emacs#you-ve-made-a-mess-of-it
+(defun linux-kernel-coding-style/c-lineup-arglist-tabs-only (ignored)
+  "Line up argument lists by tabs, not spaces"
+  (let* ((anchor (c-langelem-pos c-syntactic-element))
+   (column (c-langelem-2nd-pos c-syntactic-element))
+   (offset (- (1+ column) anchor))
+   (steps (floor offset c-basic-offset)))
+    (* (max steps 1)
+       c-basic-offset)))
+
+;; Add Linux kernel style
+(add-hook 'c-mode-common-hook
+    (lambda ()
+      (c-add-style "linux-kernel"
+       '("linux" (c-offsets-alist
+            (arglist-cont-nonempty
+             c-lineup-gcc-asm-reg
+             linux-kernel-coding-style/c-lineup-arglist-tabs-only))))))
+
+(defun linux-kernel-coding-style/setup ()
+  (let ((filename (buffer-file-name)))
+    ;; Enable kernel mode for the appropriate files
+    (when (and buffer-file-name
+               ( or (string-match "linux" buffer-file-name)
+                    (string-match "liburing" buffer-file-name)
+                    (string-match "bpf" buffer-file-name)))
+                    ;; (string-match "xfstests" buffer-file-name)))
+      (setq indent-tabs-mode t)
+      (setq tab-width 8)
+      (setq c-basic-offset 8)
+      (c-set-style "linux-kernel"))))
+
+(add-hook 'c-mode-hook 'linux-kernel-coding-style/setup)
+
 ;; Go mode hook
 (add-hook! go-mode
   (setq gofmt-command "goimports")
@@ -111,7 +152,7 @@
 (setq dired-omit-mode nil)
 
 ;; Indentation tweaks
-(setq-default indent-tabs-mode nil)
+;; (setq-default indent-tabs-mode nil)
 ;; (defun my-setup-indent (n)
 ;;   ;;General tab size
 ;;   (setq-default tab-width n)
@@ -457,3 +498,6 @@
    (lambda (key _value)
      (file-notify-rm-watch key))
    file-notify-descriptors))
+
+;; Quell annoying vterm cursor thing with evil
+(defadvice! +vterm-update-cursor (orig-fn &rest args) :before #'vterm-send-key (vterm-goto-char (point)))
