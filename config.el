@@ -4,7 +4,7 @@
 
 ;; BEGIN GENERAL EMACS CONFIG
 ;;Use custom font
-(setq doom-font (font-spec :family "Droid Sans Mono" :size 17))
+(setq doom-font (font-spec :family "Droid Sans Mono" :size 18))
 
 ;; No quit prompt please
 (setq confirm-kill-emacs nil)
@@ -124,15 +124,11 @@
   (gofmt-before-save)
   )
 
-;; ;; LSP overrides
-;; (add-hook! lsp-mode
-
-;;   (lsp-register-custom-settings
-;;    '(("gopls.experimentalWorkspaceModule" t t)))
-
-;;   ;; ;;Workaround for gopls and emacs 27
-;;   ;; (setq lsp-gopls-codelens nil)
-;;   )
+;; LSP overrides
+(add-hook! lsp-mode
+  (setq lsp-file-watch-threshold 3000)
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]out/rust\\'")
+  )
 
 ;;Prettier JS mode hook
 ;;
