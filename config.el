@@ -4,7 +4,7 @@
 
 ;; BEGIN GENERAL EMACS CONFIG
 ;;Use custom font
-(setq doom-font (font-spec :family "Droid Sans Mono" :size 18))
+(setq doom-font (font-spec :family "Droid Sans Mono" :size 12.0))
 
 ;; No quit prompt please
 (setq confirm-kill-emacs nil)
@@ -126,7 +126,7 @@
 
 ;; LSP overrides
 (add-hook! lsp-mode
-  (setq lsp-file-watch-threshold 3000)
+  (setq lsp-file-watch-threshold 4000)
   (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]out/rust\\'")
   )
 
