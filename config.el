@@ -4,10 +4,11 @@
 
 ;; BEGIN GENERAL EMACS CONFIG
 ;;Use custom font
-(setq doom-font (font-spec :family "Droid Sans Mono" :size 12.0))
+(setq doom-font (font-spec :family "Droid Sans Mono" :size 13.5))
 
+(setq confirm-kill-emacs t)
 ;; No quit prompt please
-(setq confirm-kill-emacs nil)
+(setq confirm-kill-processes nil)
 
 ;;Tighten which-key interval
 (setq which-key-idle-delay 0.4)
