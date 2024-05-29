@@ -6,7 +6,7 @@
 ;;Use custom font
 (setq doom-font (font-spec :family "Droid Sans Mono" :size 13.5))
 
-(setq confirm-kill-emacs t)
+;; (setq confirm-kill-emacs t)
 ;; No quit prompt please
 (setq confirm-kill-processes nil)
 
@@ -22,6 +22,9 @@
 
 ;;LSP perf thing
 (setq read-process-output-max (* 1024 1024))
+
+;; I hate this, turn it off
+(setq workspaces-on-switch-project-behavior nil)
 
 ;;cc-mode lsp/clang stuff
 (setq lsp-clients-clangd-args '("-j=3"
@@ -253,7 +256,7 @@
   (add-hook! 'cfn-yaml-mode-hook 'flycheck-mode)
 
   (setq flycheck-markdown-markdownlint-cli-config ".markdownlint.json")
-  (setq flycheck-golangci-lint-enable-linters '("goimports" "godox" "bodyclose" "gosec" "misspell" "exportloopref" "gofmt" "ifshort"))
+  (setq flycheck-golangci-lint-enable-linters '("goimports" "godox" "bodyclose" "gosec" "misspell" "exportloopref" "gofmt"))
   )
 
 ;; When I switch Counsel/Projectile projects, open Magit buffer by default
