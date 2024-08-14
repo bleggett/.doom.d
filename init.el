@@ -22,23 +22,24 @@
 
        :completion
        company           ; the ultimate code completion backend
+       ;;(corfu +orderless)  ; complete with cap(f), cape and a flying feather!
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       ;;vertico
-       (ivy               ; a search engine for love and life
-        +prescient
-	+all-the-icons-ivy)
+       (vertico
+         +icons)
+       ;; (ivy               ; a search engine for love and life
+       ;;  +prescient
+       ;;  +all-the-icons-ivy)
         ;; +childframe)
 
        :ui
        deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
-       doom-quit         ; DOOM quit-message prompts when you quit Emacs
+       ;;doom-quit         ; DOOM quit-message prompts when you quit Emacs
        (emoji 
        	+unicode)  ; 🙂
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
-       ;;hydra
        ;;indent-guides     ; highlighted indent columns
        ;;ligatures         ; ligatures and symbols to make your code pretty again
        ;;minimap           ; show a map of the code on the side
@@ -110,15 +111,13 @@
        ;;pass              ; password manager for nerds
        pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
-       ;;rgb               ; creating color strings
-       ;;taskrunner        ; taskrunner for all your projects
        terraform         ; infrastructure as code
        ;;tmux              ; an API for interacting with tmux
        ;;tree-sitter       ; syntax and parsing, sitting in a tree...
        upload            ; map local to remote projects via ssh/ftp
 
        :os
-       (:if IS-MAC macos)  ; improve compatibility with macOS
+       (:if (featurep :system 'macos) macos)  ; improve compatibility with macOS
        ;;tty               ; improve the terminal Emacs experience
 
        :lang
@@ -151,8 +150,8 @@
        ;;(haskell +lsp)    ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
-       (json              ; At least it ain't XML
-        +lsp)
+       json              ; At least it ain't XML
+        ;;+tree-sitter)
        (java
         +lsp) ; the poster child for carpal tunnel syndrome
        (javascript        ; all(hope(abandon(ye(who(enter(here))))))
@@ -202,8 +201,9 @@
        ;;terra             ; Earth and Moon in alignment for performance.
        (web               ; the tubes
         +lsp)
-       (yaml              ; JSON, but readable
-        +lsp)
+       yaml              ; JSON, but readable
+        ;; +tree-sitter)
+       ;;zig               ; C, but simpler
 
        :email
        ;;(mu4e +org +gmail)
@@ -216,7 +216,6 @@
        ;;everywhere        ; *leave* Emacs!? You must be joking
        ;;irc               ; how neckbeards socialize
        ;;(rss +org)        ; emacs as an RSS reader
-       ;;twitter           ; twitter client https://twitter.com/vnought
 
        :config
        ;;literate
