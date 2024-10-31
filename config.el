@@ -294,7 +294,7 @@
 (map!
  :leader
  :prefix "s"
- :desc "Resume last search"           "r" #'ivy-resume)
+ :desc "Resume last search"           "r" #'vertico-repeat)
 
 ;; Org binds are goofy, fix
 (map!
