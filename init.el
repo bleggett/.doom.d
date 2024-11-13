@@ -104,7 +104,8 @@
        ;;ein               ; tame Jupyter notebooks with emacs
        (eval +overlay)     ; run code, run (also, repls)
        lookup           ; helps you navigate your code and documentation
-       lsp
+       (lsp
+        +eglot)
        (magit             ; a git porcelain for Emacs
         +forge)
        make              ; run make tasks from Emacs
