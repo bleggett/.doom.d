@@ -64,3 +64,5 @@
 (package! kubel)
 (package! kubel-evil)
 (package! protobuf-mode)
+(package! shell-maker)
+(package! chatgpt-shell)

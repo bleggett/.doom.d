@@ -217,6 +217,14 @@
 (after! sh-script
   (set-company-backend! 'sh-mode nil))
 
+;; Configure pull API token from ~/.authinfo.gpg
+(use-package! chatgpt-shell
+  :defer
+  :config
+    (setq chatgpt-shell-anthropic-key
+        (auth-source-pick-first-password :host "api.anthropic.com"))
+ )
+
 ;; Configure grip markdown previewer to pull Github API token from ~/.authinfo.gpg
 (use-package! grip-mode
   :defer
