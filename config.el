@@ -248,7 +248,7 @@
 ;;             ))
 
 ;; Use dap debugger
-(require 'dap-dlv-go)
+;; (require 'dap-dlv-go)
 
 (after! flycheck
   ;; Set up cfn-lint integration if flycheck is installed
