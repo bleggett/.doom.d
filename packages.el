@@ -66,3 +66,4 @@
 (package! protobuf-mode)
 (package! shell-maker)
 (package! chatgpt-shell)
+(package! gptel)

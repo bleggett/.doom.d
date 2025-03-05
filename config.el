@@ -225,6 +225,12 @@
         (auth-source-pick-first-password :host "api.anthropic.com"))
  )
 
+;; OPTIONAL configuration
+(setq
+ gptel-model 'claude-3-sonnet-20240229 ;  "claude-3-opus-20240229" also available
+ gptel-backend (gptel-make-anthropic "Claude"
+                 :stream t :key (auth-source-pick-first-password :host "api.anthropic.com")))
+
 ;; Configure grip markdown previewer to pull Github API token from ~/.authinfo.gpg
 (use-package! grip-mode
   :defer
