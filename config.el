@@ -6,6 +6,11 @@
 ;;Use custom font
 (setq doom-font (font-spec :family "Droid Sans Mono" :size 13.5))
 
+;; Use custom auth-sources path
+(setq auth-sources '("~/.config/doom/authinfo.gpg"))
+;; make sure epa is on
+(epa-file-enable)
+
 ;; (setq confirm-kill-emacs t)
 ;; No quit prompt please
 (setq confirm-kill-processes nil)
@@ -230,6 +235,10 @@
  gptel-model 'claude-3-sonnet-20240229 ;  "claude-3-opus-20240229" also available
  gptel-backend (gptel-make-anthropic "Claude"
                  :stream t :key (auth-source-pick-first-password :host "api.anthropic.com")))
+
+;; Configure igist to pull auth-source
+(setq igist-auth-marker 'igist)
+(setq igist-current-user-name "bleggett")
 
 ;; Configure grip markdown previewer to pull Github API token from ~/.authinfo.gpg
 (use-package! grip-mode
