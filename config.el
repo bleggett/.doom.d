@@ -8,12 +8,13 @@
 
 ;; Use custom auth-sources path
 (setq auth-sources '("~/.config/doom/authinfo.gpg"))
-;; make sure epa is on
-(epa-file-enable)
 
 ;; (setq confirm-kill-emacs t)
 ;; No quit prompt please
 (setq confirm-kill-processes nil)
+
+;; Smooth scrolling
+(pixel-scroll-precision-mode)
 
 ;; override highly unprofessional, unsuitable-for-work-computer comic quit prompts with something
 ;; proper and highly suitable
@@ -31,8 +32,7 @@
 (setq display-line-numbers-type nil)
 
 ;;GPG Key ID for encryption
-(setq epg-file-encrypt-to 'algosystem@gmail.com)
-(setf epg-pinentry-mode nil)
+(epa-file-enable)
 
 ;;LSP perf thing
 (setq read-process-output-max (* 1024 1024))
@@ -156,6 +156,10 @@
 ;; (add-hook! rust-mode
 ;;   (setq rustic-lsp-server 'rust-analyzer)
 ;;   )
+(add-hook! rustic-mode
+        (setq rustic-format-trigger 'on-save)
+)
+
 ;; Prefer SVG mermaid diagrams
 (setq mermaid-output-format ".svg")
 
@@ -570,3 +574,18 @@
           (cons "emacs-lsp-booster" orig-result))
       orig-result)))
 (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
+
+;; mu4e
+(set-email-account! "Gmail"
+  '((mu4e-sent-folder       . "/\[Gmail\].Sent Mail")
+    (mu4e-drafts-folder     . "/\[Gmail\].Drafts")
+    (mu4e-trash-folder      . "/\[Gmail\].Trash")
+    (mu4e-refile-folder     . "/\[Gmail\].All Mail")
+    (smtpmail-smtp-user     . "benjamin@edera.dev")
+    (smtpmail-smtp-server   . "smtp.gmail.com")
+    (user-mail-address      . "benjamin@edera.dev")    ;; only needed for mu < 1.4
+    (smtpmail-servers-requiring-authorization . "smtp\\.gmail\\.com")
+    )
+  t)
+;; (setq +mu4e-gmail-accounts '(("benjamin@edera.dev" . "/hlissner")
+;;                              ("example@example.com" . "/example")))
