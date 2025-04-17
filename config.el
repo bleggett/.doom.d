@@ -156,9 +156,9 @@
 ;; (add-hook! rust-mode
 ;;   (setq rustic-lsp-server 'rust-analyzer)
 ;;   )
-(add-hook! rustic-mode
-        (setq rustic-format-trigger 'on-save)
-)
+;; (add-hook! rustic-mode
+;;         (setq rustic-format-trigger 'on-save)
+;; )
 
 ;; Prefer SVG mermaid diagrams
 (setq mermaid-output-format ".svg")
@@ -233,12 +233,6 @@
     (setq chatgpt-shell-anthropic-key
         (auth-source-pick-first-password :host "api.anthropic.com"))
  )
-
-;; OPTIONAL configuration
-(setq
- gptel-model 'claude-3-sonnet-20240229 ;  "claude-3-opus-20240229" also available
- gptel-backend (gptel-make-anthropic "Claude"
-                 :stream t :key (auth-source-pick-first-password :host "api.anthropic.com")))
 
 ;; Configure igist to pull auth-source
 (setq igist-auth-marker 'igist)
@@ -577,15 +571,43 @@
 
 ;; mu4e
 (set-email-account! "Gmail"
-  '((mu4e-sent-folder       . "/\[Gmail\].Sent Mail")
-    (mu4e-drafts-folder     . "/\[Gmail\].Drafts")
-    (mu4e-trash-folder      . "/\[Gmail\].Trash")
-    (mu4e-refile-folder     . "/\[Gmail\].All Mail")
-    (smtpmail-smtp-user     . "benjamin@edera.dev")
+  '((mu4e-sent-folder       . "/sent")
+    (mu4e-drafts-folder     . "/drafts")
+    (mu4e-trash-folder      . "/trash")
+    (mu4e-refile-folder     . "/allmail")
+    (smtpmail-smtp-user     . "benjamin@edera.io")
     (smtpmail-smtp-server   . "smtp.gmail.com")
-    (user-mail-address      . "benjamin@edera.dev")    ;; only needed for mu < 1.4
+    (user-mail-address      . "benjamin@edera.io")    ;; only needed for mu < 1.4
     (smtpmail-servers-requiring-authorization . "smtp\\.gmail\\.com")
     )
   t)
+
+(after! mu4e
+  (setq mu4e-split-view 'vertical)
+  (setq mu4e-headers-visible-colums 100)
+  (setq mu4e-maildir-shortcuts
+        '(("/important" . ?i)
+        ("/github" . ?g)
+        ("/xen-devel" . ?x)))
+
+  ;; the following is to show shortcuts in the main view.
+  (add-to-list 'mu4e-bookmarks
+  '(:name "Important"
+  :query "maildir:/important"
+  :key ?i))
+
+  (add-to-list 'mu4e-bookmarks
+  '(:name "Github Notifications"
+  :query "maildir:/github"
+  :key ?g))
+
+  (add-to-list 'mu4e-bookmarks
+  '(:name "xen-devel"
+  :query "maildir:/xen-devel"
+  :key ?x)))
+
+;; (after! mu4e
+;;         (setq mu4e-update-interval 60)
+;; )
 ;; (setq +mu4e-gmail-accounts '(("benjamin@edera.dev" . "/hlissner")
 ;;                              ("example@example.com" . "/example")))
