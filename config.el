@@ -9,8 +9,7 @@
 ;; Use custom auth-sources path
 (setq auth-sources '("~/.config/doom/authinfo.gpg"))
 
-;; (setq confirm-kill-emacs t)
-;; No quit prompt please
+;; No process quit prompt please
 (setq confirm-kill-processes nil)
 
 ;; Smooth scrolling
@@ -36,9 +35,6 @@
 
 ;;LSP perf thing
 (setq read-process-output-max (* 1024 1024))
-
-;; I hate this, turn it off
-(setq workspaces-on-switch-project-behavior nil)
 
 ;;cc-mode lsp/clang stuff
 (setq lsp-clients-clangd-args '("-j=3"
@@ -66,9 +62,6 @@
   ;; Twiddle evil cursor visuals for insert state
   (setq evil-insert-state-cursor '(bar "orange"))
 
-  ;; DO NOT USE, WEIRD
-  ;; (setq evil-want-minibuffer 1)
-
   ;; I want C-w o to close other windows
   (define-key evil-window-map "o" 'delete-other-windows)
 
@@ -80,12 +73,6 @@
 (add-to-list 'focus-out-hook (lambda () (save-some-buffers t nil)))
 
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;;When I quit, don't ask me if I want to kill processes
-;; (setq confirm-kill-processes nil)
-
-;; Format Go files on save
-;; (add-hook! 'before-save-hook #'gofmt-before-save)
 
 ;; Time display in modeline settings
 (add-hook! display-time-mode
@@ -99,7 +86,6 @@
        (setq whitespace-style (default-value 'whitespace-style))
        (setq whitespace-display-mappings (default-value 'whitespace-display-mappings))
        (whitespace-mode 'toggle))
-
 
 ;; Get emacs and linux C style to play nice
 ;; https://www.kernel.org/doc/html/v4.10/process/coding-style.html?highlight=emacs#you-ve-made-a-mess-of-it
@@ -149,16 +135,7 @@
   )
 
 ;;Prettier JS mode hook
-;;
 (add-hook! 'js2-mode-hook 'prettier-js-mode)
-
-;; ;;Rust mode hook
-;; (add-hook! rust-mode
-;;   (setq rustic-lsp-server 'rust-analyzer)
-;;   )
-;; (add-hook! rustic-mode
-;;         (setq rustic-format-trigger 'on-save)
-;; )
 
 ;; Prefer SVG mermaid diagrams
 (setq mermaid-output-format ".svg")
@@ -169,28 +146,6 @@
 ;; DON'T HIDE THINGS FROM ME THAT'S NOT HOW RELATIONSHIPS WORK
 (setq dired-omit-mode nil)
 
-;; Indentation tweaks
-;; (setq-default indent-tabs-mode nil)
-;; (defun my-setup-indent (n)
-;;   ;;General tab size
-;;   (setq-default tab-width n)
-;;   ;; java/c/c++
-;;   (setq-default c-basic-offset n)
-;;   (setq-default go-tab-width n)
-;;   ;; web development
-;;   (setq-default coffee-tab-width n) ; coffeescript
-;;   ;; (setq-default javascript-indent-level n) ; javascript-mode
-;;   ;; (setq-default js-indent-level n) ; js-mode
-;;   ;; (setq-default js2-basic-offset n) ; js2-mode, in latest js2-mode, it's alias of js-indent-level
-;;   (setq-default web-mode-markup-indent-offset n) ; web-mode, html tag in html file
-;;   (setq-default web-mode-css-indent-offset n) ; web-mode, css in html file
-;;   (setq-default web-mode-code-indent-offset n) ; web-mode, js code in html file
-;;   (setq-default css-indent-offset n) ; css-mode
-;;   ;; (setq-default typescript-indent-level n)
-
-;;   )
-;; (my-setup-indent 4)
-
 ;; Define a custom Cloudformation minor mode that runs `cfn-lint'
 (define-derived-mode cfn-yaml-mode yaml-mode
   "CFN-YAML"
@@ -199,17 +154,6 @@
 (add-to-list 'magic-mode-alist
              '("\\(---\n\\)?AWSTemplateFormatVersion:" . cfn-yaml-mode))
 
-;;posframe stuff
-
-;; (use-package! ivy-posframe
-;;   :defer
-;;   :config
-;;   (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))
-;;         ivy-posframe-parameters
-;;           '((left-fringe . 8)
-;;             (right-fringe . 8))))
-
-;; (ivy-posframe-mode 1)
 ;; END GENERAL EMACS CONFIG
 
 ;; BEGIN PACKAGE CONFIG
@@ -379,23 +323,6 @@
         org-journal-date-format "%A, %d %B %Y"
         org-journal-enable-agenda-integration t))
 
-;; ;; (add-hook! org-roam-mode 'org-roam-server-mode)
-;; (use-package! websocket
-;;     :after org-roam)
-
-;; (use-package! org-roam-ui
-;;     :after org-roam ;; or :after org
-;; ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-;; ;;         a hookable mode anymore, you're advised to pick something yourself
-;; ;;         if you don't care about startup time, use
-;; ;;  :hook (after-init . org-roam-ui-mode)
-;;     :hook (org-mode . org-roam-ui-mode)
-;;     :config
-;;     (setq org-roam-ui-sync-theme t
-;;           org-roam-ui-follow t
-;;           org-roam-ui-update-on-save t
-;;           org-roam-ui-open-on-start t))
-
 (after! org-roam
   (setq org-roam-db-update-method 'immediate)
   (setq org-roam-graph-viewer "open")
@@ -443,10 +370,6 @@
 ;; Put orgmode config here, spacemacs does not use the built-in org version
 (after! org
 
-  ;; ;; (setq org-default-notes-file "~/Dropbox/org/refile.org")
-  ;; (setq org-archive-location (concat "archive/archive-"
-  ;;                                    (format-time-string "%Y%m" (current-time))
-  ;;                                    ".org::"))
   '(org-enforce-todo-dependencies t)
 
   ;; Tell org that we're using org-protocol
@@ -537,37 +460,37 @@
 (defadvice! +vterm-update-cursor (orig-fn &rest args) :before #'vterm-send-key (vterm-goto-char (point)))
 
 
-;; Try to work around emacs shitty single-threadedness with lsp-booster
-(defun lsp-booster--advice-json-parse (old-fn &rest args)
-  "Try to parse bytecode instead of json."
-  (or
-   (when (equal (following-char) ?#)
-     (let ((bytecode (read (current-buffer))))
-       (when (byte-code-function-p bytecode)
-         (funcall bytecode))))
-   (apply old-fn args)))
-(advice-add (if (progn (require 'json)
-                       (fboundp 'json-parse-buffer))
-                'json-parse-buffer
-              'json-read)
-            :around
-            #'lsp-booster--advice-json-parse)
+;; ;; Try to work around emacs shitty single-threadedness with lsp-booster
+;; (defun lsp-booster--advice-json-parse (old-fn &rest args)
+;;   "Try to parse bytecode instead of json."
+;;   (or
+;;    (when (equal (following-char) ?#)
+;;      (let ((bytecode (read (current-buffer))))
+;;        (when (byte-code-function-p bytecode)
+;;          (funcall bytecode))))
+;;    (apply old-fn args)))
+;; (advice-add (if (progn (require 'json)
+;;                        (fboundp 'json-parse-buffer))
+;;                 'json-parse-buffer
+;;               'json-read)
+;;             :around
+;;             #'lsp-booster--advice-json-parse)
 
-(defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
-  "Prepend emacs-lsp-booster command to lsp CMD."
-  (let ((orig-result (funcall old-fn cmd test?)))
-    (if (and (not test?)                             ;; for check lsp-server-present?
-             (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
-             lsp-use-plists
-             (not (functionp 'json-rpc-connection))  ;; native json-rpc
-             (executable-find "emacs-lsp-booster"))
-        (progn
-          (when-let ((command-from-exec-path (executable-find (car orig-result))))  ;; resolve command from exec-path (in case not found in $PATH)
-            (setcar orig-result command-from-exec-path))
-          (message "Using emacs-lsp-booster for %s!" orig-result)
-          (cons "emacs-lsp-booster" orig-result))
-      orig-result)))
-(advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
+;; (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
+;;   "Prepend emacs-lsp-booster command to lsp CMD."
+;;   (let ((orig-result (funcall old-fn cmd test?)))
+;;     (if (and (not test?)                             ;; for check lsp-server-present?
+;;              (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+;;              lsp-use-plists
+;;              (not (functionp 'json-rpc-connection))  ;; native json-rpc
+;;              (executable-find "emacs-lsp-booster"))
+;;         (progn
+;;           (when-let ((command-from-exec-path (executable-find (car orig-result))))  ;; resolve command from exec-path (in case not found in $PATH)
+;;             (setcar orig-result command-from-exec-path))
+;;           (message "Using emacs-lsp-booster for %s!" orig-result)
+;;           (cons "emacs-lsp-booster" orig-result))
+;;       orig-result)))
+;; (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
 
 ;; mu4e
 (set-email-account! "Gmail"
@@ -605,9 +528,3 @@
   '(:name "xen-devel"
   :query "maildir:/xen-devel"
   :key ?x)))
-
-;; (after! mu4e
-;;         (setq mu4e-update-interval 60)
-;; )
-;; (setq +mu4e-gmail-accounts '(("benjamin@edera.dev" . "/hlissner")
-;;                              ("example@example.com" . "/example")))
