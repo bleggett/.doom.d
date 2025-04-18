@@ -342,13 +342,19 @@
         ;;template for capturing URL with optional body selection
         ;;Browser bookmarklet:
         ;;javascript:location.href = 'org-protocol://roam-ref?template=r&ref=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title) + '&body=' + encodeURIComponent(window.getSelection())
-        '(("r" "ref" plain "- Captured %T:\n#+BEGIN_QUOTE\n${body}\n#+END_QUOTE\n %?"
+        '(("r" "ref" plain "\n#+BEGIN_QUOTE\n${body}\n#+END_QUOTE\n %?"
                 :target (file+head "web-captures/${slug}.org"
-                        "#+title: ${title}\n#+url: ${ref}\n#+capture_date: %T\n-----------\n"
+                        "#+title: ${title}\n#+url: ${ref}\n#+capture_date: %T\n#+filetags: :web-capture:\n-----------\n"
                         )
                 :immediate-finish t
                 :empty-lines-before 1
                 :unnarrowed t)))
+
+  (setq org-roam-capture-templates
+        '(("d" "default" plain "%? #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n" :target
+                (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+                        "#+title: ${title}\n#+url: %F\n#+capture_date: %T\n-----------\n") :unnarrowed t))
+        )
 )
 
 (after! deft
