@@ -534,3 +534,36 @@
   '(:name "xen-devel"
   :query "maildir:/xen-devel"
   :key ?x)))
+
+;; erc
+(after! erc
+        (setq erc-modules (seq-union erc-modules '(sasl autojoin autoaway button completion keep-place-indicator nicks stamp track)))
+        (erc-update-modules)
+        ;; Function to get nick from authsource for a given server
+        (defun my/erc-authsource-creds (server)
+                "Get (nick password) from authsource for SERVER."
+                (when-let ((auth (car (auth-source-search :host server :max 1))))
+                (list (plist-get auth :user)
+                        (funcall (plist-get auth :secret)))))
+
+        (let ((creds (my/erc-authsource-creds "irc.libera.chat")))
+        (when creds
+        (setq erc-sasl-user (car creds)
+                erc-sasl-password (cadr creds)
+                erc-nick (car creds))))
+
+        (setq erc-sasl-mechanism 'plain)
+
+        (setq erc-use-ssl t)
+        (setq erc-autojoin-timing 'ident)
+        (setq erc-interactive-display 'bury)
+        (setq erc-prompt-for-password nil)
+        (setq erc-server-reconnect-attempts 5)
+        (setq erc-server-reconnect-timeout 3)
+        (setq erc-hide-list '("JOIN" "PART" "QUIT"))
+        ;; Auto-join channels
+        (setq erc-autojoin-channels-alist
+                '((".*\\.libera\\..*" "#coffeecafe" "#emacs" "#doomemacs" "##rust")))
+        (setq erc-interpret-mirc-color t)
+        (setq erc-autojoin-delay 1)
+        (setq erc-server-auto-reconnect t))
