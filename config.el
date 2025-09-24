@@ -34,6 +34,9 @@
 ;;GPG Key ID for encryption
 (epa-file-enable)
 
+;; nerd commenter?
+(evilnc-default-hotkeys)
+
 ;;LSP perf thing
 (setq read-process-output-max (* 1024 1024))
 
@@ -178,6 +181,12 @@
     (setq chatgpt-shell-anthropic-key
         (auth-source-pick-first-password :host "api.anthropic.com"))
  )
+
+;; OPTIONAL configuration
+(setq
+ gptel-model 'claude-opus-4
+ gptel-backend (gptel-make-anthropic "Claude"
+                 :stream t :key (auth-source-pick-first-password :host "api.anthropic.com")))
 
 ;; Configure igist to pull auth-source
 (setq igist-auth-marker 'igist)
