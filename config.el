@@ -7,7 +7,8 @@
 (setq doom-font (font-spec :family "Droid Sans Mono" :size 13.5))
 
 ;; Use custom auth-sources path
-(setq auth-sources '("~/.config/doom/authinfo.gpg"))
+(setq auth-sources '("~/.config/doom/authinfo-work.gpg"
+                "~/.config/doom/authinfo-personal.gpg"))
 
 ;; No process quit prompt please
 (setq confirm-kill-processes nil)
