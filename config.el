@@ -547,7 +547,7 @@
 
 ;; erc
 (after! erc
-        (setq erc-modules (seq-union erc-modules '(sasl autojoin autoaway button completion keep-place-indicator nicks stamp track)))
+        (setq erc-modules (seq-union erc-modules '(sasl autojoin autoaway button completion keep-place-indicator nicks stamp track services-regain)))
         (erc-update-modules)
         ;; Function to get nick from authsource for a given server
         (defun my/erc-authsource-creds (server)
