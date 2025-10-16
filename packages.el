@@ -67,3 +67,4 @@
 (package! shell-maker)
 (package! chatgpt-shell)
 (package! igist)
+(package! xclip)

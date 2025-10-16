@@ -318,6 +318,9 @@
 ;; For when Vim is in vterm and we need an unswallowed escape
 (global-set-key (kbd "C-<escape>") 'vterm-send-escape)
 
+;; unstick cursor workaround
+(defadvice! +vterm-update-cursor (orig-fn &rest args) :before #'vterm-send-key (vterm-goto-char (point)))
+
 ;; END Custom keybinds
 
 
@@ -577,3 +580,11 @@
         (setq erc-interpret-mirc-color t)
         (setq erc-autojoin-delay 1)
         (setq erc-server-auto-reconnect t))
+
+;; wayland/sway clipboard stuff
+(use-package! xclip
+  :config
+  (setq xclip-program "wl-copy")
+  (setq xclip-select-enable-clipboard t)
+  (setq xclip-mode t)
+  (setq xclip-method (quote wl-copy)))
